@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\BackEnd;
-
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -37,11 +37,22 @@ class Users extends BackEndController
     }
 
     public  function  edit($id){
-        return view('back-end.users.edit');
+        $row= User::FindOrFail($id);
+        return view('back-end.users.edit' ,compact('row'));
     }
 
-    public  function  update($id){
-
+    public  function  update($id , Request $request){
+        $row = User::FindOrFail($id);
+        $requestArray = [
+          'name' => $request->name  ,
+          'email' => $request->email ,
+        ];
+        if (request()->has('password') && request()->get('password') != ''){
+            $requestArray = $requestArray + ['password' => Hash::make($request->password)];
+        }
+        
+        //dd($requestArray);
+        $row->update($requestArray);
     }
 
     public  function  delete($id){

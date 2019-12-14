@@ -18,7 +18,7 @@
                             <p class="card-category"> {{$pageDes}}</p>
                         </div>
                         <div class="col-md-4 text-right">
-                            <a href="#pablo" class="btn btn-white btn-round">
+                            <a href="{{route('users.create')}}" class="btn btn-white btn-round">
                                 <i class="material-icons">add</i>
                                 add {{$moduleName}}
                             </a>
