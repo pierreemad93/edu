@@ -43,6 +43,12 @@ class Users extends BackEndController
 
     public  function  update($id , Request $request){
         $row = User::FindOrFail($id);
+        /*
+           we make that $requestArray -> make all mustly requried
+          updated by click at the button
+         if change the password => changed will be send at database
+        if  not changes sent username | email only
+        */
         $requestArray = [
           'name' => $request->name  ,
           'email' => $request->email ,
@@ -50,7 +56,7 @@ class Users extends BackEndController
         if (request()->has('password') && request()->get('password') != ''){
             $requestArray = $requestArray + ['password' => Hash::make($request->password)];
         }
-        
+
         //dd($requestArray);
         $row->update($requestArray);
     }
