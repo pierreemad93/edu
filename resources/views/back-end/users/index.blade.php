@@ -57,16 +57,20 @@
                                         {{$row->email}}
                                     </td>
                                     <td class="td-actions text-right">
-                                        <button type="button" rel="tooltip" title=""
+                                        <a href="{{route('users.edit', ['id'=> $row->id])}}" type="button" rel="tooltip" title=""
                                                 class="btn btn-white btn-link btn-sm"
                                                 data-original-title="Edit {{$moduleName}}">
                                             <i class="material-icons">edit</i>
-                                        </button>
-                                        <button type="button" rel="tooltip" title=""
-                                                class="btn btn-white btn-link btn-sm"
-                                                data-original-title="Remove {{$moduleName}}">
-                                            <i class="material-icons">delete</i>
-                                        </button>
+                                        </a>
+                                        <form action="{{route('users.destroy' , ['id' => $row->id])}}" method="POST">
+                                            {{csrf_field()}}
+                                            {{method_field('delete')}}
+                                            <button type="submit" rel="tooltip" title=""
+                                                    class="btn btn-white btn-link btn-sm"
+                                                    data-original-title="Remove {{$moduleName}}">
+                                                <i class="material-icons">delete</i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

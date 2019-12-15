@@ -17,6 +17,7 @@
                 </div>
                 <div class="card-body">
                     <form action="{{route('users.update' , ['id' => $row->id])}}" method="POST">
+                        {{csrf_field()}}
                         {{method_field('put')}}
                         @include('back-end.users.form')
                         <button type="submit" class="btn btn-primary pull-right">Update user</button>
