@@ -1,5 +1,5 @@
 <?php
-
+ 
 namespace App\Http\Controllers\BackEnd;
 /*
  * that's mean controller for dashboard
@@ -7,11 +7,10 @@ namespace App\Http\Controllers\BackEnd;
  * */
 
 use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Database\Eloquent\Model;
 class BackEndController extends Controller
 {
     //
@@ -31,7 +30,7 @@ class BackEndController extends Controller
          *                  ->if var ==> $user then ==> compact(user)
          *                  -> without ($)
          * */
-        $rows = $this->model::paginate(10);
+        $rows = $this->model->paginate(10);
         //dd($this->getClassNameFromModel());
         return view('back-end.'.$this->getClassNameFromModel().'.index', compact('rows'));
     }
@@ -40,15 +39,19 @@ class BackEndController extends Controller
 
         return view('back-end.'.$this->getClassNameFromModel().'.create');
     }
+    public function edit($id)
+    {
+        $row = $this->model->FindOrFail($id);
+        return view('back-end.'.$this->getClassNameFromModel().'.edit', compact('row'));
+    }
     public function destroy($id)
     {
-        $this->model()->FindOrFail($id)->delete();
+        $this->model->FindOrFail($id)->delete();
         return redirect()->route($this->getClassNameFromModel().'.index');
     }
       protected function getClassNameFromModel()
     {
         return str_plural(strtolower(class_basename($this->model)));
     }
-
 
 }
