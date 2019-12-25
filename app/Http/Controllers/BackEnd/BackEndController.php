@@ -31,8 +31,11 @@ class BackEndController extends Controller
          *                  ->if var ==> $user then ==> compact(user)
          *                  -> without ($)
          * */
-        $rows = $this->model::paginate(10);
+        $rows = $this->model;
+        $rows=$this->filter($rows);
+        $rows=$rows->paginate(5);
         //dd($this->getClassNameFromModel());
+
         return view('back-end.'.$this->getClassNameFromModel().'.index', compact('rows'));
     }
     public function create()
@@ -40,10 +43,18 @@ class BackEndController extends Controller
 
         return view('back-end.'.$this->getClassNameFromModel().'.create');
     }
+    public function edit($id)
+    {
+        $row = $this->model->FindOrFail($id);
+        return view('back-end.'.$this->getClassNameFromModel().'.edit', compact('row'));
+    }
     public function destroy($id)
     {
         $this->model->FindOrFail($id)->delete();
         return redirect()->route($this->getClassNameFromModel().'.index');
+    }
+    protected function filters($rows){
+        return $rows ;
     }
       protected function getClassNameFromModel()
     {

@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\BackEnd;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-
 use App\Models\User;
 use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Model;
+use App\Http\Requests\BackEnd\Users\Store;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 
 class Users extends BackEndController
@@ -17,22 +18,16 @@ class Users extends BackEndController
     {
         parent::__construct($model);
     }
-
-    public function store(Request $request)
+    
+    public function store(Store $request)
     {
-        User::create([
-            'name' => $request->username,
-            'email' => $request->email,
-            'password' => Hash::make($request->password)
-        ]);
+        $requestArray =$request->all();
+        $requestArray['password'] = Hash::make($requestArray['password']); 
+        User::create();
         return redirect()->route('users.index');
     }
 
-    public function edit($id)
-    {
-        $row = User::FindOrFail($id);
-        return view('back-end.users.edit', compact('row'));
-    }
+   
 
     public function update($id, Request $request)
     {
