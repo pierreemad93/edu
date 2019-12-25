@@ -42,7 +42,7 @@ class BackEndController extends Controller
     }
     public function destroy($id)
     {
-        $this->model()->FindOrFail($id)->delete();
+        $this->model->FindOrFail($id)->delete();
         return redirect()->route($this->getClassNameFromModel().'.index');
     }
       protected function getClassNameFromModel()
